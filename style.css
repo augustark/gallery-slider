@@ -261,4 +261,91 @@ main {
     .site-content {
         font-size: clamp(0.875rem, 0.447rem + 0.8929vw, 1rem);
     }
+
+    .gallery-card-photo canvas {
+        height: 100%;
+    }
+
+    .gallery-slider .slick-active .gallery-card-info {
+        transition-delay: 0.5s;
+    }
+
+    .gallery-slider .slick-current.slick-active,
+    .gallery-slider .slick-slide.is-visible.is-cloned,
+    .gallery-slider .slick-slide.is-cloned:not(.is-visible),
+    .gallery-slider .slick-slide.is-visible:not(.slick-cloned),
+    .gallery-slider .slick-slide[aria-hidden="true"]:not([tabindex="-1"]) + .slick-cloned[aria-hidden="true"] {
+        transition: none;
+    }
+
+    .gallery-slider .slick-active .gallery-card-info-content::before {
+        transition-delay: 0.8s;
+    }
+
+    .gallery-card-info {
+        padding-right: 7.875%;
+    }
+
+    .gallery-card-info-content {
+        padding: 5.627% 0 12.54% 2.484%;
+    }
+
+    .gallery-arrow {
+        bottom: 6.846%;
+    }
+}
+
+@media only screen and (max-width: 567px) {
+    .gallery-card-info {
+        padding: 5em 2em 3em;
+    }
+
+    .gallery-card-info-content::before {
+        content: unset;
+    }
+
+    .gallery-card-photo canvas {
+        max-height: 500px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .gallery-card-info {
+        padding-bottom: 6em;
+    }
+
+    .gallery-card-info-header {
+        padding: 0;
+    }
+
+    .gallery-card-info-content {
+        padding: 0;
+    }
+
+    .gallery-card-info-content p {
+        display: -webkit-box;
+        -webkit-line-clamp: 9;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .gallery-card-photo::after {
+        position: absolute;
+        content: '';
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 60%;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+    }
+
+    .gallery-card-photo canvas {
+        max-height: 100%;
+        min-height: 600px;
+    }
+
+    .gallery-arrow {
+        left: 0;
+        right: 0;
+    }
 }

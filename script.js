@@ -4,17 +4,22 @@
         slick: function() {
             const gallerySlider = $('.gallery-slider'),
                   gallerySlides = gallerySlider.children();
-            
+
             // Checks if the slider exists or if it has more than 1 child element
             if (!gallerySlider.length || gallerySlides.length < 2) return; 
             
             // Checks if the slider contains less than 2 or equal to 3 child elements
-            if (gallerySlides.length <= 3 && gallerySlides.length > 1) {
+            if (
+                gallerySlides.length <= 3 && 
+                gallerySlides.length > 1 &&
+                !gallerySlides.attr('data-cloned')
+            ) {
                 const clonedChildren = gallerySlides.clone();
                 gallerySlider.append(clonedChildren);
+                gallerySlides.parent().attr('data-cloned', 'true');
             }
 
-            gallerySlider.on('init afterChange', function(event, slick, currentSlide) {
+            function afterChange(event, slick, currentSlide) {
                 const slides = slick.$slides,
                       defaultWidth = 400,
                       activeWidth = 800,
@@ -38,7 +43,9 @@
 
                 // First occurences of slick-cloned after the visible slick-slide
                 $(slides[slides.length - 1]).next().addClass('is-cloned');
-            }).on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+            }
+
+            function beforeChange(event, slick, currentSlide, nextSlide) {
                 const slides = slick.$slides;
                 $('.slick-slide').removeClass('is-visible');
             
@@ -47,17 +54,33 @@
                 } else {
                     $(slides[slides.length - 1]).next().removeClass('is-cloned');
                 }
-            });
+            }
 
-            gallerySlider.slick({
-                autoplay: true,
-                slidesToShow: 1,
-                touchThreshold: 5,
-                variableWidth: true,
-                autoplaySpeed: 5000,
-                prevArrow: $('.gallery-arrow .prev'),
-                nextArrow: $('.gallery-arrow .next'),
-            });
+            function initSlick() {
+                gallerySlider.on('init afterChange', afterChange);
+                gallerySlider.on('beforeChange', beforeChange);
+
+                gallerySlider.slick({
+                    autoplay: true,
+                    slidesToShow: 1,
+                    touchThreshold: 5,
+                    variableWidth: true,
+                    autoplaySpeed: 5000,
+                    prevArrow: $('.gallery-arrow .prev'),
+                    nextArrow: $('.gallery-arrow .next'),
+                    responsive: [
+                        {
+                            breakpoint: 992,
+                            settings: {
+                                autoplay: false,
+                                variableWidth: false,
+                            }
+                        }
+                    ]
+                }); 
+            }          
+            
+            initSlick();
         },
     }
 
