@@ -5,8 +5,88 @@
 html, body {
     margin: 0;
     padding: 0;
-    font-family: "Playfair Display", serif;
+    font-family: "Open Sans", sans-serif;
     font-variant-numeric: lining-nums;
+}
+
+main {
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.site-content {
+    font-size: clamp(0.62rem, 0rem + 1vw, 1rem);
+}
+
+.site-content p {
+    color: inherit;
+    font-weight: 400;
+    font-size: 0.875em;
+    line-height: 1.786;
+    text-align: justify;
+    letter-spacing: 0.05em;
+    margin: 1.786em 0;
+}
+
+.site-title {
+    line-height: 1;
+    font-weight: 400;
+    font-size: 3.75em;
+    letter-spacing: 0;
+    text-transform: capitalize;
+    font-variant-numeric: lining-nums;
+    font-family: "Playfair Display", serif;
+}
+
+.site-title span {
+    display: block;
+    font-weight: 400;
+    font-size: 0.25em;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    font-family: "Open Sans", sans-serif;
+    margin-bottom: 0.333em;
+}
+
+.site-arrow {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    color: inherit;
+    background: none;
+    position: relative;
+    transition: 0.4s ease;
+}
+
+.site-arrow::before {
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+
+    -webkit-mask-image: url("images/site-arrow.png");
+    mask-image: url("images/site-arrow.png");
+    background: currentColor;
+    position: relative;
+    display: block;
+    height: 1.25em;
+    width: 2.563em;
+    content: '';
+}
+
+.site-arrow.prev::before {
+    transform: scaleX(-1);
+}
+
+.site-arrow:hover {
+    opacity: 1;
 }
 
 .site-image {
@@ -30,51 +110,59 @@ html, body {
     display: block;
 }
 
-#ip-splide {
-    display: none !important;
+/* Gallery Slider */
+.gallery {
+    width: 100%;
 }
 
 .gallery-wrap {
     width: 100%;
+    color: #fff;
     margin: 0 auto;
     max-width: 1600px;
 }
 
-/* slide when not active/center*/
-.slick-slide,
-/* .slick-slide[aria-hidden="true"]:not(.slick-cloned) ~ .slick-cloned[aria-hidden="true"] { */
-.slick-cloned[aria-hidden="true"] {
-    width: 400px;
+.gallery-list {
+    position: relative;
 }
 
-/* slide when active/center */
-.slick-current.slick-active,
-.slick-slide[aria-hidden="true"]:not([tabindex="-1"]) + .slick-cloned[aria-hidden="true"] {
-    width: 800px;
+.gallery-slider {}
+
+.gallery-slider:not(.slick-initialized) {}
+
+/* slide when not active */
+.gallery-slider .slick-slide,
+.gallery-slider .slick-cloned[aria-hidden="true"] {
+    width: min(400px, 25vw);
+}
+
+/* slide when visible */
+.gallery-slider .slick-slide.is-visible.is-cloned,
+.gallery-slider .slick-slide.is-visible:not(.slick-cloned) {
+    width: min(400px, 25vw);
     transition: width 0.5s 0.5s ease-in-out;
 }
 
-/* slide when they're visible */
-.slick-slide.is-visible:not(.slick-cloned) {
-    width: 400px;
+/* slide when active & visible */
+.gallery-slider .slick-current.slick-active,
+.gallery-slider .slick-slide.is-cloned:not(.is-visible),
+.gallery-slider .slick-slide[aria-hidden="true"]:not([tabindex="-1"]) + .slick-cloned[aria-hidden="true"] {
+    width: min(800px, 50vw);
     transition: width 0.5s 0.5s ease-in-out;
 }
-
-/* slide when they're visible */
-.slick-slide.is-visible.is-cloned {
-    width: 400px;
-    transition: width 0.5s 0.5s ease-in-out;
-}
-
-/* Adding base  */
-.slick-slide.is-cloned:not(.is-visible) {
-    width: 800px;
-    transition: width 0.5s 0.5s ease-in-out;
-}
-
 
 .gallery-slider .slick-slide > div {
     display: flex;
+}
+
+.gallery-slider .slick-active .gallery-card-info {
+    transition-delay: 1.5s;
+    opacity: 1;
+}
+
+.gallery-slider .slick-active .gallery-card-info-content::before {
+    transition-delay: 1.8s;
+    transform: scaleY(1);
 }
 
 .gallery-card {
@@ -86,53 +174,91 @@ html, body {
 }
 
 .gallery-card-photo img {
-    opacity: 0.9;
+    opacity: 0.80;
 }
 
 .gallery-card-photo canvas {
     max-height: 650px;
-    min-height: calc((650/1600)*100vw);
+    height: calc((650/1600)*100vw);
 }
 
 .gallery-card-info {
     position: absolute;
     top: 0;
     left: 0;
+    opacity: 0;
     width: 100%;
     height: 100%;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: 0.5s ease;
+    /* padding: 78px 78px 0; */
+    padding: 9.75% 9.75% 0;
+}
+
+.gallery-card-info-header {
+    /* padding: 0 22px; */
+    padding: 0 3.416%;
+}
+
+.gallery-card-info-content {
+    position: relative;
+    /* padding: 62px 0 55px 16px; */
+    padding: 9.627% 0 8.54% 2.484%;
+}
+
+.gallery-card-info-content::before {
+    position: absolute;
+    content: '';
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    right: 100%;
+    background: #fff;
+    transform: scaleY(0);
+    margin-right: 1.625em;
+    transform-origin: top;
+    transition: transform 1s ease;
+}
+
+.gallery-card-info-content p {
+    margin: 0;
+}
+
+.gallery-card-info-content strong {
+    display: block;
+    line-height: 1;
+    font-weight: 400;
+    font-size: 1.688em;
+    letter-spacing: 0.08;
+    text-transform: uppercase;
+    font-family: "Playfair Display", serif;
+    margin-bottom: 0.778em;
+}
+
+.gallery-arrow {
+    position: absolute;
+    bottom: 11.846%;
+    right: 7.875%;
+    z-index: 1;
+    gap: 4.063em;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1;
-    color: #fff;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    line-height: 1;
-    font-size: 60px;
 }
 
-.splide .gallery-card {
-    /* width: 400px; */
-    width: 800px;
-    overflow: clip;
-    transform: scaleX(50%);
-    transform-origin: left;
-    transition: 0.5s ease;
+.gallery-arrow .site-arrow {
+    cursor: pointer;
 }
 
-.splide .gallery-card .gallery-card-photo img {
-    transform: scaleX(200%);
-    transition: 0.5s ease;
+.gallery-arrow .site-arrow:hover {
+    opacity: 0.8;
 }
 
-.splide__slide.is-visible.is-active .gallery-card {
-    transform: scaleX(100%);
-}
-
-.splide__slide.is-visible.is-active .gallery-card img {
-    transform: scaleX(100%);
-}
-
-.splide__slide.is-visible.is-next ~ .splide__slide .gallery-card {
-    margin-left: -400px;
+@media only screen and (max-width: 991px) {
+    .site-content {
+        font-size: clamp(0.875rem, 0.447rem + 0.8929vw, 1rem);
+    }
 }
