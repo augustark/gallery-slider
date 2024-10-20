@@ -1,0 +1,138 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: "Playfair Display", serif;
+    font-variant-numeric: lining-nums;
+}
+
+.site-image {
+    position: relative;
+}
+
+.site-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+}
+
+.site-image canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+#ip-splide {
+    display: none !important;
+}
+
+.gallery-wrap {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 1600px;
+}
+
+/* slide when not active/center*/
+.slick-slide,
+/* .slick-slide[aria-hidden="true"]:not(.slick-cloned) ~ .slick-cloned[aria-hidden="true"] { */
+.slick-cloned[aria-hidden="true"] {
+    width: 400px;
+}
+
+/* slide when active/center */
+.slick-current.slick-active,
+.slick-slide[aria-hidden="true"]:not([tabindex="-1"]) + .slick-cloned[aria-hidden="true"] {
+    width: 800px;
+    transition: width 0.5s 0.5s ease-in-out;
+}
+
+/* slide when they're visible */
+.slick-slide.is-visible:not(.slick-cloned) {
+    width: 400px;
+    transition: width 0.5s 0.5s ease-in-out;
+}
+
+/* slide when they're visible */
+.slick-slide.is-visible.is-cloned {
+    width: 400px;
+    transition: width 0.5s 0.5s ease-in-out;
+}
+
+/* Adding base  */
+.slick-slide.is-cloned:not(.is-visible) {
+    width: 800px;
+    transition: width 0.5s 0.5s ease-in-out;
+}
+
+
+.gallery-slider .slick-slide > div {
+    display: flex;
+}
+
+.gallery-card {
+    position: relative;
+}
+
+.gallery-card-photo {
+    background: #000;
+}
+
+.gallery-card-photo img {
+    opacity: 0.9;
+}
+
+.gallery-card-photo canvas {
+    max-height: 650px;
+    min-height: calc((650/1600)*100vw);
+}
+
+.gallery-card-info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    font-size: 60px;
+}
+
+.splide .gallery-card {
+    /* width: 400px; */
+    width: 800px;
+    overflow: clip;
+    transform: scaleX(50%);
+    transform-origin: left;
+    transition: 0.5s ease;
+}
+
+.splide .gallery-card .gallery-card-photo img {
+    transform: scaleX(200%);
+    transition: 0.5s ease;
+}
+
+.splide__slide.is-visible.is-active .gallery-card {
+    transform: scaleX(100%);
+}
+
+.splide__slide.is-visible.is-active .gallery-card img {
+    transform: scaleX(100%);
+}
+
+.splide__slide.is-visible.is-next ~ .splide__slide .gallery-card {
+    margin-left: -400px;
+}
